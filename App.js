@@ -18,7 +18,7 @@ class PartySelection extends Component {
   }
 
   onClick = () => {
-    alert(this.props.party);
+    alert("in partyselection click handler'");
   };
 
   render() {
@@ -32,7 +32,8 @@ class PartySelection extends Component {
           <View
             style={{
               alignItems: 'center',
-                backgroundColor: this.props.party == 'conservative' ? 'red':'blue',
+              backgroundColor:
+                this.props.party === 'conservative' ? 'red' : 'blue',
               justifyContent: 'center',
               height: 400,
             }}>
