@@ -10,46 +10,34 @@ import React, {Component} from 'react';
 import {View, Text, Button, TouchableHighlight, StyleSheet} from 'react-native';
 
 class PartySelection extends Component {
-  _opposite_party(party) {
-    if (party === 'conservative') {
-      return 'liberal';
-    } else {
-      return 'conservative';
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: true,
+    };
   }
 
-  _party_color(party) {
-    if (party === 'conservative') {
-      return 'red';
-    } else {
-      return 'blue';
-    }
-  }
-
-  _onPressConservative() {
-    alert('You are a conserative');
-  }
-
-  _onPressLiberal() {
-    alert('You are a liberal');
-  }
+  onClick = () => {
+    alert(this.props.party);
+  };
 
   render() {
+    if (this.state.visible !== true) {
+      return null;
+    }
+
     return (
       <View style={{flex: 2}}>
-        <TouchableHighlight
-          onPress={this._onPressLiberal}
-          underlayColor="black">
+        <TouchableHighlight onPress={this.onClick} underlayColor="black">
           <View
             style={{
               alignItems: 'center',
-              backgroundColor: this._party_color(this.props.party),
+                backgroundColor: this.props.party == 'conservative' ? 'red':'blue',
               justifyContent: 'center',
               height: 400,
             }}>
             <Text>
-              I'm a {this.props.party}, bring me a{' '}
-              {this._opposite_party(this.props.party)}
+              I'm a {this.props.party}, bring me a {this.props.opposite_party}
             </Text>
           </View>
         </TouchableHighlight>
@@ -79,10 +67,8 @@ export default class PoliticalRouletteApp extends Component {
     return (
       <View style={{flex: 1}}>
         <Header />
-
-        <PartySelection party="conservative" />
-
-        <PartySelection party={'liberal'} />
+        <PartySelection party="conservative" opposite_party="liberal" />
+        <PartySelection party="liberal" opposite_party="conservative" />
       </View>
     );
   }
