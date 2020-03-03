@@ -6,109 +6,107 @@
  * @flow
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, Button, TouchableHighlight, StyleSheet} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+class PartySelection extends Component {
+  _opposite_party(party) {
+    if (party === 'conservative') {
+      return 'liberal';
+    } else {
+      return 'conservative';
+    }
+  }
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+  _party_color(party) {
+    if (party === 'conservative') {
+      return 'red';
+    } else {
+      return 'blue';
+    }
+  }
+
+  _onPressConservative() {
+    alert('You are a conserative');
+  }
+
+  _onPressLiberal() {
+    alert('You are a liberal');
+  }
+
+  render() {
+    return (
+      <View style={{flex: 2}}>
+        <TouchableHighlight
+          onPress={this._onPressLiberal}
+          underlayColor="black">
+          <View
+            style={{
+              alignItems: 'center',
+              backgroundColor: this._party_color(this.props.party),
+              justifyContent: 'center',
+              height: 400,
+            }}>
+            <Text>
+              I'm a {this.props.party}, bring me a{' '}
+              {this._opposite_party(this.props.party)}
+            </Text>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+        </TouchableHighlight>
+      </View>
+    );
+  }
+}
+
+class Header extends Component {
+  render() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'powderblue',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text style={{fontSize: 24}}>Welcome to Political Roulette</Text>
+      </View>
+    );
+  }
+}
+
+export default class PoliticalRouletteApp extends Component {
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <Header />
+
+        <PartySelection party="conservative" />
+
+        <PartySelection party={'liberal'} />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  // container: {
+  //   paddingTop: 60,
+  //   alignItems: 'center',
+  // },
+  button: {
+    // marginBottom: 30,
+    // width: 260,
+    alignItems: 'center',
+    backgroundColor: '#2196F3',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  buttonText: {
+    textAlign: 'center',
+    color: 'white',
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  // header: {
+  //   flex: 1,
+  //   backgroundColor: 'grey',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
 });
-
-export default App;
