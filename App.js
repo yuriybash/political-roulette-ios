@@ -17,8 +17,13 @@ class PartySelection extends Component {
     };
   }
 
-  onClick = () => {
-    alert("in partyselection click handler'");
+  // onClick = () => {
+  //   alert("in partyselection click handler'");
+  // };
+
+  handlePress = () => {
+    // Need to check to prevent null exception.
+    this.props.onPress?.(); // Same as this.props.onPress && this.props.onPress();
   };
 
   render() {
@@ -28,7 +33,7 @@ class PartySelection extends Component {
 
     return (
       <View style={{flex: 2}}>
-        <TouchableHighlight onPress={this.onClick} underlayColor="black">
+        <TouchableHighlight onPress={this.handlePress} underlayColor="black">
           <View
             style={{
               alignItems: 'center',
@@ -64,12 +69,50 @@ class Header extends Component {
 }
 
 export default class PoliticalRouletteApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inCall: false,
+      party: null,
+    };
+  }
+
+  startCall() {
+    alert('starting...');
+  }
+
+  setLiberal = () => {
+    this.setState(() => {
+      return {party: 'liberal'};
+    });
+    this.startCall();
+  };
+
+  setConservative = () => {
+    this.setState(() => {
+      return {party: 'conservative'};
+    });
+    this.startCall();
+  };
+
   render() {
+    if (this.state.inCall === true) {
+      return null;
+    }
+
     return (
       <View style={{flex: 1}}>
         <Header />
-        <PartySelection party="conservative" opposite_party="liberal" />
-        <PartySelection party="liberal" opposite_party="conservative" />
+        <PartySelection
+          party="conservative"
+          opposite_party="liberal"
+          onPress={this.setConservative}
+        />
+        <PartySelection
+          party="liberal"
+          opposite_party="conservative"
+          onPress={this.setLiberal}
+        />
       </View>
     );
   }
