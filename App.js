@@ -7,7 +7,16 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text, Button, TouchableHighlight, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  TouchableHighlight,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+
+import {RTCPeerConnection, RTCView, mediaDevices} from 'react-native-webrtc';
 
 class PartySelection extends Component {
   constructor(props) {
@@ -16,10 +25,6 @@ class PartySelection extends Component {
       visible: true,
     };
   }
-
-  // onClick = () => {
-  //   alert("in partyselection click handler'");
-  // };
 
   handlePress = () => {
     // Need to check to prevent null exception.
@@ -68,75 +73,80 @@ class Header extends Component {
   }
 }
 
-export default class PoliticalRouletteApp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inCall: false,
-      party: null,
+export default function PoliticalRouletteApp() {
+  const [localStream, setLocalStream] = React.useState();
+  const [inCall, setInCall] = React.useState(false);
+  const [party, setParty] = React.useState();
+
+  const startLocalStream = async () => {
+
+    console.log("111")
+
+
+    // isFront will determine if the initial camera should face user or environment
+    const isFront = true;
+    const devices = await mediaDevices.enumerateDevices();
+
+
+    console.log("222")
+
+    const facing = isFront ? 'front' : 'environment';
+    const videoSourceId = devices.find(device => device.kind === 'videoinput' && device.facing === facing);
+    const facingMode = isFront ? 'user' : 'environment';
+    const constraints = {
+      audio: true,
+      video: {
+        mandatory: {
+          minWidth: 500, // Provide your own width, height and frame rate here
+          minHeight: 300,
+          minFrameRate: 30,
+        },
+        facingMode,
+        optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
+      },
     };
-  }
-
-  startCall() {
-    alert('starting...');
-  }
-
-  setLiberal = () => {
-    this.setState(() => {
-      return {party: 'liberal'};
-    });
-    this.startCall();
+    const newStream = await mediaDevices.getUserMedia(constraints);
+    setLocalStream(newStream);
   };
 
-  setConservative = () => {
-    this.setState(() => {
-      return {party: 'conservative'};
-    });
-    this.startCall();
+
+
+
+
+  const startcall = () => {
+    console.log("startcall")
+    startLocalStream()
   };
 
-  render() {
-    if (this.state.inCall === true) {
-      return null;
-    }
+  const setLiberal = () => {
+    setParty('liberal');
+    console.log(party);
+    startcall();
+  };
 
-    return (
-      <View style={{flex: 1}}>
-        <Header />
+  const setConservative = () => {
+    setParty('conservative');
+    console.log(party);
+    startcall();
+  };
+
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      {!inCall && <Header />}
+      {!inCall && (
         <PartySelection
           party="conservative"
           opposite_party="liberal"
-          onPress={this.setConservative}
+          onPress={setLiberal}
         />
+      )}
+      {!inCall && (
         <PartySelection
           party="liberal"
           opposite_party="conservative"
-          onPress={this.setLiberal}
+          onPress={setConservative}
         />
-      </View>
-    );
-  }
+      )}
+    </SafeAreaView>
+  );
 }
-
-const styles = StyleSheet.create({
-  // container: {
-  //   paddingTop: 60,
-  //   alignItems: 'center',
-  // },
-  button: {
-    // marginBottom: 30,
-    // width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3',
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-  },
-  // header: {
-  //   flex: 1,
-  //   backgroundColor: 'grey',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-});

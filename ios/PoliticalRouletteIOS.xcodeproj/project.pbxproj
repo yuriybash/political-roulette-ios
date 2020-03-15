@@ -17,6 +17,17 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* PoliticalRouletteIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PoliticalRouletteIOSTests.m */; };
 		459CC138FC47427A6FEC0457 /* libPods-PoliticalRouletteIOS-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C38CF8599C19057763ED3067 /* libPods-PoliticalRouletteIOS-tvOS.a */; };
+		5BF0A551241DF1C700D56C1F /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A550241DF1C700D56C1F /* WebRTC.framework */; };
+		5BF0A554241DF5E500D56C1F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A553241DF5E500D56C1F /* AVFoundation.framework */; };
+		5BF0A556241DF5EC00D56C1F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A555241DF5EC00D56C1F /* AudioToolbox.framework */; };
+		5BF0A558241DF5F100D56C1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A557241DF5F100D56C1F /* CoreGraphics.framework */; };
+		5BF0A55A241DF5F600D56C1F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A559241DF5F600D56C1F /* GLKit.framework */; };
+		5BF0A55C241DF5FB00D56C1F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A55B241DF5FB00D56C1F /* CoreAudio.framework */; };
+		5BF0A55E241DF60000D56C1F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A55D241DF60000D56C1F /* CoreVideo.framework */; };
+		5BF0A560241DF60700D56C1F /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A55F241DF60700D56C1F /* VideoToolbox.framework */; };
+		5BF0A562241DF63100D56C1F /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A561241DF63100D56C1F /* libc.tbd */; };
+		5BF0A564241DF63600D56C1F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A563241DF63600D56C1F /* libc++.tbd */; };
+		5BF0A566241DF63B00D56C1F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0A565241DF63B00D56C1F /* libsqlite3.tbd */; };
 		77D89AD0BE3D911814693858 /* libPods-PoliticalRouletteIOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8D751AC7ED6E85091BE029 /* libPods-PoliticalRouletteIOSTests.a */; };
 		81268CF183B3432DA369AC16 /* libPods-PoliticalRouletteIOS-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FF460FF4735D9831AAEEDD /* libPods-PoliticalRouletteIOS-tvOSTests.a */; };
 		C522767FF8EF76EDEE19A15F /* libPods-PoliticalRouletteIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E576DB0DFA630D680F19F540 /* libPods-PoliticalRouletteIOS.a */; };
@@ -57,6 +68,17 @@
 		2D02E47B1E0B4A5D006451C7 /* PoliticalRouletteIOS-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PoliticalRouletteIOS-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* PoliticalRouletteIOS-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PoliticalRouletteIOS-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42ADC0137BE0F7CA0DA75E65 /* Pods-PoliticalRouletteIOS-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoliticalRouletteIOS-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-PoliticalRouletteIOS-tvOS/Pods-PoliticalRouletteIOS-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5BF0A550241DF1C700D56C1F /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
+		5BF0A553241DF5E500D56C1F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5BF0A555241DF5EC00D56C1F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5BF0A557241DF5F100D56C1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5BF0A559241DF5F600D56C1F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		5BF0A55B241DF5FB00D56C1F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		5BF0A55D241DF60000D56C1F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		5BF0A55F241DF60700D56C1F /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		5BF0A561241DF63100D56C1F /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
+		5BF0A563241DF63600D56C1F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		5BF0A565241DF63B00D56C1F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		67389DA92601C8F34A7408E5 /* Pods-PoliticalRouletteIOS-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoliticalRouletteIOS-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PoliticalRouletteIOS-tvOSTests/Pods-PoliticalRouletteIOS-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		82613D5A8E1ECE6865369692 /* Pods-PoliticalRouletteIOS-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoliticalRouletteIOS-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PoliticalRouletteIOS-tvOS/Pods-PoliticalRouletteIOS-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		832E0066522F40BDAB0E1BE1 /* Pods-PoliticalRouletteIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoliticalRouletteIOS.release.xcconfig"; path = "Target Support Files/Pods-PoliticalRouletteIOS/Pods-PoliticalRouletteIOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,7 +104,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BF0A566241DF63B00D56C1F /* libsqlite3.tbd in Frameworks */,
+				5BF0A564241DF63600D56C1F /* libc++.tbd in Frameworks */,
+				5BF0A562241DF63100D56C1F /* libc.tbd in Frameworks */,
+				5BF0A560241DF60700D56C1F /* VideoToolbox.framework in Frameworks */,
+				5BF0A55E241DF60000D56C1F /* CoreVideo.framework in Frameworks */,
+				5BF0A55C241DF5FB00D56C1F /* CoreAudio.framework in Frameworks */,
+				5BF0A55A241DF5F600D56C1F /* GLKit.framework in Frameworks */,
+				5BF0A558241DF5F100D56C1F /* CoreGraphics.framework in Frameworks */,
+				5BF0A556241DF5EC00D56C1F /* AudioToolbox.framework in Frameworks */,
+				5BF0A554241DF5E500D56C1F /* AVFoundation.framework in Frameworks */,
 				C522767FF8EF76EDEE19A15F /* libPods-PoliticalRouletteIOS.a in Frameworks */,
+				5BF0A551241DF1C700D56C1F /* WebRTC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +167,6 @@
 				19AFE4F95B7E9FF05113E12D /* Pods-PoliticalRouletteIOSTests.debug.xcconfig */,
 				E6BF5B9839BAADD9049EB6D6 /* Pods-PoliticalRouletteIOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -155,6 +187,16 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5BF0A565241DF63B00D56C1F /* libsqlite3.tbd */,
+				5BF0A563241DF63600D56C1F /* libc++.tbd */,
+				5BF0A561241DF63100D56C1F /* libc.tbd */,
+				5BF0A55F241DF60700D56C1F /* VideoToolbox.framework */,
+				5BF0A55D241DF60000D56C1F /* CoreVideo.framework */,
+				5BF0A55B241DF5FB00D56C1F /* CoreAudio.framework */,
+				5BF0A559241DF5F600D56C1F /* GLKit.framework */,
+				5BF0A557241DF5F100D56C1F /* CoreGraphics.framework */,
+				5BF0A555241DF5EC00D56C1F /* AudioToolbox.framework */,
+				5BF0A553241DF5E500D56C1F /* AVFoundation.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				E576DB0DFA630D680F19F540 /* libPods-PoliticalRouletteIOS.a */,
@@ -175,6 +217,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				5BF0A550241DF1C700D56C1F /* WebRTC.framework */,
 				13B07FAE1A68108700A75B9A /* PoliticalRouletteIOS */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PoliticalRouletteIOSTests */,
@@ -230,6 +273,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				071D9136ABFAB1F447D5FF75 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -285,7 +329,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -308,12 +352,15 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* PoliticalRouletteIOS */,
@@ -323,6 +370,9 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -372,6 +422,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		071D9136ABFAB1F447D5FF75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PoliticalRouletteIOS/Pods-PoliticalRouletteIOS-frameworks.sh",
+				"${PODS_ROOT}/../../node_modules/react-native-webrtc/ios/WebRTC.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PoliticalRouletteIOS/Pods-PoliticalRouletteIOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -598,6 +666,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PoliticalRouletteIOS.app/PoliticalRouletteIOS";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -618,6 +689,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PoliticalRouletteIOS.app/PoliticalRouletteIOS";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -628,7 +702,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PoliticalRouletteIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -638,6 +714,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PoliticalRouletteIOS;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -647,7 +726,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = NO;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = PoliticalRouletteIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -657,6 +739,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PoliticalRouletteIOS;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -685,6 +770,9 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -713,6 +801,9 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -740,6 +831,9 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PoliticalRouletteIOS-tvOS.app/PoliticalRouletteIOS-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Debug;
 		};
@@ -767,6 +861,9 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PoliticalRouletteIOS-tvOS.app/PoliticalRouletteIOS-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -801,6 +898,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-webrtc/ios/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -816,7 +914,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-webrtc/ios/**";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -854,6 +954,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-webrtc/ios/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -862,7 +963,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-webrtc/ios/**";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
