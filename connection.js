@@ -29,7 +29,7 @@ let offerer_clientID = null;
 let myPeerConnection = null;
 let hasAddTrack = false;
 
-let myParty = '';
+export var myParty = '';
 
 function sendToServer(msg) {
   var msgJSON = JSON.stringify(msg);
@@ -115,6 +115,7 @@ export async function connect(
           startLocalStream(localStreamSetter)
             .then(newStream => {
               createPeerConnection(on_call_end, remoteStreamSetter);
+              console.log("in party " + myParty + " , just set local stream, looks like: " + JSON.stringify(newStream))
               myPeerConnection.addStream(newStream);
             })
             .then(() => {
@@ -278,6 +279,7 @@ function handleVideoOfferMsg(
     .then(newStream => {
       createPeerConnection(on_call_end, remote_stream_setter);
       console.log('on ' + myParty + ' side ' + 'L276');
+      myPeerConnection.addStream(newStream)
 
       myPeerConnection.setRemoteDescription(new RTCSessionDescription(msg.sdp));
       console.log('on ' + myParty + ' side ' + ' L279');
@@ -379,7 +381,7 @@ function handleICEConnectionStateChangeEvent(event, on_call_end) {
 }
 
 function handleAddStreamEvent(event, remote_stream_setter) {
-  console.log('on ' + myParty + ' side ' + 'in handleAddStreamEvent');
+  console.log('on ' + myParty + ' side ' + 'in handleAddStreamEvent, stream looks like: ' + JSON.stringify(event.stream));
   remote_stream_setter(event.stream);
   // myPeerConnection.addStream(event.stream)
 }

@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 import {RTCPeerConnection, RTCView, mediaDevices} from 'react-native-webrtc';
-import {connect, myPeerConnection} from './connection';
+import {connect, myPeerConnection, myParty} from './connection';
 
 class PartySelection extends Component {
   constructor(props) {
@@ -81,7 +81,7 @@ class WaitingForOpponentScreen extends Component {
         style={{
           flex: 1,
         }}>
-        <Text style={{fontSize: 24}}>Loading, please wait...</Text>
+        <Text style={{fontSize: 24}}>Finding partner, please wait...</Text>
       </View>
     );
   }
@@ -170,7 +170,7 @@ export default function PoliticalRouletteApp() {
   }
 
   function setRemoteStreamAndlog(remoteStream) {
-    console.log("setting remote stream")
+    console.log("setting remote stream for party " + myParty)
     setRemoteStream(remoteStream)
   }
 
