@@ -262,6 +262,10 @@ function handleVideoOfferMsg(
   local_stream_setter,
   remote_stream_setter,
 ) {
+
+
+
+
   console.log('on ' + myParty + ' side ' + 'in handleVideoOfferMsg');
 
   let newLocalStream = null;
@@ -369,6 +373,7 @@ function handleICEConnectionStateChangeEvent(event, on_call_end) {
       closeVideoCall(on_call_end);
       break;
     default:
+      console.log('other type of handleICEConnectionStateChangeEvent');
       break;
   }
 }
@@ -376,6 +381,7 @@ function handleICEConnectionStateChangeEvent(event, on_call_end) {
 function handleAddStreamEvent(event, remote_stream_setter) {
   console.log('on ' + myParty + ' side ' + 'in handleAddStreamEvent');
   remote_stream_setter(event.stream);
+  // myPeerConnection.addStream(event.stream)
 }
 
 function handleICEGatheringStateChangeEvent(event) {
@@ -390,7 +396,7 @@ function handleTrackEvent(event) {
 }
 
 async function handleNegotiationNeededEvent() {
-  console.log('in handleNegotiationNeededEvent');
+  console.log('on ' + myParty + ' side, in handleNegotiationNeededEvent');
   // if (myPeerConnection._negotiating === true) {
   //   return;
   // }

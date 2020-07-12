@@ -169,6 +169,11 @@ export default function PoliticalRouletteApp() {
     setInCall(true);
   }
 
+  function setRemoteStreamAndlog(remoteStream) {
+    console.log("setting remote stream")
+    setRemoteStream(remoteStream)
+  }
+
   const initializeCall = party => {
     connect(
       party,
@@ -176,7 +181,7 @@ export default function PoliticalRouletteApp() {
       on_call_start,
       null,
       setLocalStream,
-      setRemoteStream,
+      setRemoteStreamAndlog,
     );
   };
 
