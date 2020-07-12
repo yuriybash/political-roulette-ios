@@ -13,13 +13,14 @@ import {
   registerGlobals,
 } from 'react-native-webrtc';
 
-import {localStream, remoteStream, startLocalStream} from './App';
+import {localStream, remoteStream} from './App';
+
 import {log_error} from './client_util';
 
 var uuid = require('react-native-uuid');
 
 // const host = __DEV__ ? 'ws://127.0.0.1:5000' : 'SOME_ENV_HOST';
-const host = __DEV__ ? 'ws://192.168.0.3:5000' : 'SOME_ENV_HOST';
+const host = __DEV__ ? 'ws://192.168.0.5:5000' : 'SOME_ENV_HOST';
 
 let connection = null;
 let clientID = null;
@@ -38,20 +39,54 @@ function sendToServer(msg) {
 
 registerGlobals();
 
-// myPeerConnection.setLocalDescription(desc).then(() => {
-//   sendToServer({
-//     type: 'video-offer',
-//     target: opponentClientID,
-//     sdp: myPeerConnection.localDescription,
-//     username: clientID,
-//     clientID,
-//     party,
-//   });
-// });
+export const startLocalStream = async localStreamSetter => {
+  console.log('in startlocalstream');
 
-export async function connect(party, on_delay, on_call_start, on_call_end) {
+  // isFront will determine if the initial camera should face user or environment
+  const isFront = true;
+  const devices = await mediaDevices.enumerateDevices();
+
+  const facing = isFront ? 'front' : 'environment';
+  const videoSourceId = devices.find(
+    device => device.kind === 'videoinput' && device.facing === facing,
+  );
+  const facingMode = isFront ? 'user' : 'environment';
+  const constraints = {
+    audio: true,
+    video: {
+      mandatory: {
+        minWidth: 500, // Provide your own width, height and frame rate here
+        minHeight: 300,
+        minFrameRate: 30,
+      },
+      facingMode,
+      optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
+    },
+  };
+  const newStream = await mediaDevices.getUserMedia(constraints);
+  localStreamSetter(newStream);
+  // localStream = newStream
+  return new Promise((resolve, reject) => {
+    if (true) {
+      resolve(newStream);
+    } else {
+      reject(newStream);
+    }
+  });
+};
+
+export async function connect(
+  party,
+  on_delay,
+  on_call_start,
+  on_call_end,
+  localStreamSetter,
+  remoteStreamSetter,
+) {
   myParty = party;
   console.log('Initiating connection as member of ' + party + ' party\n');
+
+  // startLocalStream(localStreamSetter);
 
   connection = new WebSocket(host, 'json');
   connection.onopen = function(evt) {
@@ -63,7 +98,7 @@ export async function connect(party, on_delay, on_call_start, on_call_end) {
       party: party,
     });
 
-    connection.onmessage = function(evt) {
+    connection.onmessage = async function(evt) {
       const msg = JSON.parse(evt.data);
 
       switch (msg.type) {
@@ -75,43 +110,49 @@ export async function connect(party, on_delay, on_call_start, on_call_end) {
           console.log('on ' + party + ' side ' + 'peer info receieved');
           opponentClientID = msg.peer_id;
           on_call_start();
-          createPeerConnection(on_call_end);
+          console.log('L124');
 
-
-
-
-          startLocalStream()
-            .then(stream => {
-              console.log("in peer info case, localStream looks like:")
-              console.log(localStream)
-              // myPeerConnection.addStream(localStream);
+          startLocalStream(localStreamSetter)
+            .then(newStream => {
+              createPeerConnection(on_call_end, remoteStreamSetter);
+              myPeerConnection.addStream(newStream);
             })
-            .catch(error => {
-              console.log('error adding stream');
-            });
-
-          console.log('on ' + party + ' side ' + '1111');
-          myPeerConnection.createOffer().then(desc => {
-            myPeerConnection.setLocalDescription(desc).then(() => {
-              console.log('on ' + myParty + ' side ' + 'sending video-offer');
-              sendToServer({
-                type: 'video-offer',
-                target: opponentClientID,
-                sdp: myPeerConnection.localDescription,
-                username: clientID,
-                clientID,
-                party,
-              });
-            });
-          });
-          console.log('on ' + party + ' side ' + '2222');
-
+            .then(() => {
+              // createPeerConnection(on_call_end, remoteStreamSetter);
+              myPeerConnection
+                .createOffer()
+                .then(offer => {
+                  myPeerConnection
+                    .setLocalDescription(offer)
+                    .then(() => {
+                      console.log(
+                        'on ' + myParty + ' side ' + 'sending video-offer',
+                      );
+                      sendToServer({
+                        type: 'video-offer',
+                        target: opponentClientID,
+                        sdp: myPeerConnection.localDescription,
+                        username: clientID,
+                        clientID,
+                        party,
+                      });
+                    })
+                    .catch(reportError);
+                })
+                .catch(reportError);
+            })
+            .catch(reportError);
           break;
 
         case 'video-offer':
           console.log('on ' + party + ' side ' + 'video-offer receieved');
           on_call_start();
-          handleVideoOfferMsg(msg, on_call_end);
+          handleVideoOfferMsg(
+            msg,
+            on_call_end,
+            localStreamSetter,
+            remoteStreamSetter,
+          );
           break;
 
         case 'video-answer':
@@ -126,7 +167,7 @@ export async function connect(party, on_delay, on_call_start, on_call_end) {
                 ' side ' +
                 'new-ice-candidate message received and myPeerConnection exists',
             );
-            handleNewICECandidateMsg(msg);
+            handleIceCandidateFromPeerReceived(msg);
           } else {
             console.log(
               'on ' +
@@ -151,7 +192,7 @@ export async function connect(party, on_delay, on_call_start, on_call_end) {
   };
 }
 
-function createPeerConnection(on_call_end) {
+function createPeerConnection(on_call_end, remoteStreamSetter) {
   console.log(
     'on ' +
       myParty +
@@ -164,7 +205,7 @@ function createPeerConnection(on_call_end) {
   myPeerConnection = new RTCPeerConnection(configuration);
   hasAddTrack = myPeerConnection.addTrack !== undefined;
 
-  myPeerConnection.onicecandidate = handleInternalICECandidateEvent;
+  myPeerConnection.onicecandidate = handleICECandidateCreatedLocallyEvent;
   myPeerConnection.ontrack = handleTrackEvent;
   myPeerConnection.onnegotiationneeded = handleNegotiationNeededEvent;
   myPeerConnection.onremovetrack = _.bind(
@@ -190,13 +231,19 @@ function createPeerConnection(on_call_end) {
   if (hasAddTrack) {
     myPeerConnection.ontrack = handleTrackEvent;
   } else {
-    myPeerConnection.onaddstream = handleAddStreamEvent;
+    myPeerConnection.onaddstream = _.bind(
+      handleAddStreamEvent,
+      null,
+      _,
+      remoteStreamSetter,
+    );
+    // myPeerConnection.onaddstream = handleAddStreamEvent;
   }
 }
 
-function handleInternalICECandidateEvent(event) {
+function handleICECandidateCreatedLocallyEvent(event) {
   console.log(
-    'on ' + myParty + ' side ' + 'in handleInternalICECandidateEvent',
+    'on ' + myParty + ' side ' + 'in handleICECandidateCreatedLocallyEvent',
   );
 
   if (event.candidate) {
@@ -209,79 +256,69 @@ function handleInternalICECandidateEvent(event) {
   }
 }
 
-function handleVideoOfferMsg(msg, on_call_end) {
+function handleVideoOfferMsg(
+  msg,
+  on_call_end,
+  local_stream_setter,
+  remote_stream_setter,
+) {
   console.log('on ' + myParty + ' side ' + 'in handleVideoOfferMsg');
 
   let newLocalStream = null;
   offerer_clientID = msg.clientID;
   opponentClientID = msg.clientID;
 
-  createPeerConnection(on_call_end);
+  // const desc = new RTCSessionDescription(msg.sdp);
 
-  const desc = new RTCSessionDescription(msg.sdp);
+  startLocalStream(local_stream_setter)
+    .then(newStream => {
+      createPeerConnection(on_call_end, remote_stream_setter);
+      console.log('on ' + myParty + ' side ' + 'L276');
 
-
-  // myPeerConnection.setRemoteDescription(desc).then(
-  //   startLocalStream().then(stream => {
-  //     console.log("on " + myParty + " side, setting localStream. looks like: ")
-  //     console.log(localStream)
-  //     myPeerConnection.addStream(localStream);
-  //   })
-  // )
-
-    // .catch(_.bind(handleGetUserMediaError, null, _, on_call_end));
-
-
-
-  myPeerConnection
-    .setRemoteDescription(desc)
-    .then(startLocalStream())
-    .then(stream => {
-      console.log("on " + myParty + " side, setting stream")
-      // myPeerConnection.addStream(localStream);
-      console.log("on " + myParty + " side, stream set")
+      myPeerConnection.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+      console.log('on ' + myParty + ' side ' + ' L279');
     })
-    .then(myPeerConnection.createAnswer())
-    .then(answer => myPeerConnection.setLocalDescription(answer))
     .then(() => {
-      let msg = {
-        clientID,
-        target: offerer_clientID,
-        type: 'video-answer',
-        sdp: myPeerConnection.localDescription,
-      };
-      sendToServer(msg);
+      myPeerConnection.createAnswer().then(answer => {
+        console.log('answer L283:::' + JSON.stringify(answer));
+        myPeerConnection.setLocalDescription(answer).then(() => {
+          let msg = {
+            clientID,
+            target: offerer_clientID,
+            type: 'video-answer',
+            sdp: myPeerConnection.localDescription,
+          };
+          sendToServer(msg);
+          console.log(
+            'on ' +
+              myParty +
+              ' side, video-answer sent; sdp sent: ' +
+              myPeerConnection.localDescription,
+          );
+        });
+      });
     })
-    .catch(_.bind(handleGetUserMediaError, null, _, on_call_end));
-
-  // myPeerConnection
-  //   .setRemoteDescription(desc)
-  //   .then(() => startLocalStream().then(stream => {
-  //     myPeerConnection.addStream(localStream)
-  //   }).then(() => myPeerConnection.createAnswer())
-  //   .then(answer => myPeerConnection.setLocalDescription(answer))
-  //   .then(() => {
-  //     console.log('on ' + myParty + ' side ' + "L210")
-  //     const msg = {
-  //       // name: myUsername,
-  //       clientID,
-  //       target: offerer_clientID,
-  //       // hostname: myHostname,
-  //       type: 'video-answer',
-  //       sdp: myPeerConnection.localDescription,
-  //     };
-  //
-  //     sendToServer(msg);
-  //   })
-  //   .catch(_.bind(handleGetUserMediaError, null, _, on_call_end));
-  // .catch(handleGetUserMediaError);
+    .catch(reportError);
 }
 
 function handleVideoAnswerMsg(msg) {
-  console.log('on ' + myParty + ' side ' + 'in handleVideoAnswerMsg');
+  console.log(
+    'on ' +
+      myParty +
+      ' side ' +
+      'in handleVideoAnswerMsg, msg: ' +
+      JSON.stringify(msg),
+  );
   const desc = new RTCSessionDescription(msg.sdp);
   myPeerConnection.setRemoteDescription(desc).catch(reportError);
   console.log('on ' + myParty + ' side ' + 'just set RemoteDescription');
+
+  console.log(
+    'on ' +
+      myParty +
+      ' side ' +
+      'in handleVideoAnswerMsg, video answer handled',
+  );
 }
 
 function handleSignalingStateChangeEvent(event, on_call_end) {
@@ -307,11 +344,14 @@ function handleSignalingStateChangeEvent(event, on_call_end) {
   console.log('L241');
 }
 
-function handleNewICECandidateMsg(msg) {
-  console.log('in handleNewICECandidateMsg');
+function handleIceCandidateFromPeerReceived(msg) {
+  console.log('in handleIceCandidateFromPeerReceived');
   const candidate = new RTCIceCandidate(msg.candidate);
 
   myPeerConnection.addIceCandidate(candidate).catch(reportError);
+  // myPeerConnection.addIceCandidate(msg.candidate).catch(err => {
+  //   console.log('blarggg' + err);
+  // });
 }
 
 function handleICEConnectionStateChangeEvent(event, on_call_end) {
@@ -333,9 +373,9 @@ function handleICEConnectionStateChangeEvent(event, on_call_end) {
   }
 }
 
-function handleAddStreamEvent(event) {
+function handleAddStreamEvent(event, remote_stream_setter) {
   console.log('on ' + myParty + ' side ' + 'in handleAddStreamEvent');
-  remoteStream = event.stream;
+  remote_stream_setter(event.stream);
 }
 
 function handleICEGatheringStateChangeEvent(event) {
@@ -351,26 +391,26 @@ function handleTrackEvent(event) {
 
 async function handleNegotiationNeededEvent() {
   console.log('in handleNegotiationNeededEvent');
-  if (myPeerConnection._negotiating === true) {
-    return;
-  }
-  myPeerConnection._negotiating = true;
-  try {
-    const offer = await myPeerConnection.createOffer();
-
-    await myPeerConnection.setLocalDescription(offer);
-
-    sendToServer({
-      type: 'video-offer',
-      target: opponentClientID,
-      name: clientID,
-      sdp: myPeerConnection.localDescription,
-    });
-  } catch (e) {
-    reportError(e);
-  } finally {
-    myPeerConnection._negotiating = false;
-  }
+  // if (myPeerConnection._negotiating === true) {
+  //   return;
+  // }
+  // myPeerConnection._negotiating = true;
+  // try {
+  //   const offer = await myPeerConnection.createOffer();
+  //
+  //   await myPeerConnection.setLocalDescription(offer);
+  //
+  //   sendToServer({
+  //     type: 'video-offer',
+  //     target: opponentClientID,
+  //     name: clientID,
+  //     sdp: myPeerConnection.localDescription,
+  //   });
+  // } catch (e) {
+  //   reportError(e);
+  // } finally {
+  //   myPeerConnection._negotiating = false;
+  // }
 }
 
 function handleRemoveTrackEvent(event, on_call_end) {
@@ -419,11 +459,11 @@ function handleHangUpMsg(msg, on_close) {
 }
 
 function reportError(errMessage) {
-  log_error('Error ' + errMessage.name + ': ' + errMessage.message);
+  log_error('Error::: ' + errMessage);
 }
 
 function handleGetUserMediaError(e, on_call_end) {
-  console.log('on ' + myParty + ' side ' + 'in handleGetUserMediaError')
+  console.log('on ' + myParty + ' side ' + 'in handleGetUserMediaError');
   console.log(e);
   switch (e.name) {
     case 'NotFoundError':

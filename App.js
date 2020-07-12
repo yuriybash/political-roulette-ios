@@ -87,58 +87,61 @@ class WaitingForOpponentScreen extends Component {
   }
 }
 
-export var localStream;
-export var remoteStream;
-
-export const startLocalStream = async () => {
 
 
-  console.log("in startlocalstream")
-  let isFront = true;
-  await navigator.mediaDevices.getUserMedia({audio: true, video: true});
-  mediaDevices.enumerateDevices().then(sourceInfos => {
-    console.log('sourceInfos.length: ' + sourceInfos.length);
-    let videoSourceId;
-    for (let i = 0; i < sourceInfos.length; i++) {
-      const sourceInfo = sourceInfos[i];
-      if (
-        sourceInfo.kind == 'videoinput' &&
-        sourceInfo.facing == (isFront ? 'front' : 'environment')
-      ) {
-        videoSourceId = sourceInfo.deviceId;
-      }
-    }
-    mediaDevices
-      .getUserMedia({
-        audio: true,
-        video: {
-          mandatory: {
-            minWidth: 500, // Provide your own width, height and frame rate here
-            minHeight: 300,
-            minFrameRate: 30,
-          },
-          facingMode: isFront ? 'user' : 'environment',
-          optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
-        },
-      })
-      .then(stream => {
-        console.log('setting local stream, looks like:');
-        console.log(stream);
-        localStream = stream;
-        console.log("returning stream, looks like:")
-        console.log("L149")
-      })
-      .catch(error => {
-        console.log('error getting stream client-side');
-      });
-  });
-};
+
+
+
+
+
+
+
+
+
+
+// export const startLocalStream = async () => {
+//   console.log('in startlocalstream');
+//   let isFront = true;
+//   await navigator.mediaDevices.getUserMedia({audio: true, video: true});
+//   mediaDevices.enumerateDevices().then(sourceInfos => {
+//     console.log('sourceInfos.length: ' + sourceInfos.length);
+//     let videoSourceId;
+//     for (let i = 0; i < sourceInfos.length; i++) {
+//       const sourceInfo = sourceInfos[i];
+//       if (
+//         sourceInfo.kind === 'videoinput' &&
+//         sourceInfo.facing === (isFront ? 'front' : 'environment')
+//       ) {
+//         videoSourceId = sourceInfo.deviceId;
+//       }
+//     }
+//     mediaDevices
+//       .getUserMedia({
+//         audio: true,
+//         video: {
+//           mandatory: {
+//             minWidth: 500, // Provide your own width, height and frame rate here
+//             minHeight: 300,
+//             minFrameRate: 30,
+//           },
+//           facingMode: isFront ? 'user' : 'environment',
+//           optional: videoSourceId ? [{sourceId: videoSourceId}] : [],
+//         },
+//       })
+//       .then(stream => {
+//         console.log('setting local stream, looks like:');
+//         console.log(stream);
+//         localStream = stream;
+//         console.log('returning stream, looks like:');
+//         console.log('L149');
+//       })
+//       .catch(error => {
+//         console.log('error getting stream client-side');
+//       });
+//   });
+// };
 
 export default function PoliticalRouletteApp() {
-  // const [localStream, setLocalStream] = React.useState(false);
-  // const [cachedLocalPC, setCachedLocalPC] = React.useState();
-  // const [cachedRemotePC, setCachedRemotePC] = React.useState();
-  // const [remoteStream, setRemoteStream] = React.useState(false);
   const [
     waitingForPartySelection,
     setWaitingForPartySelection,
@@ -146,6 +149,13 @@ export default function PoliticalRouletteApp() {
   const [inCall, setInCall] = React.useState(false);
   const [party, setParty] = React.useState();
   const [waitingForOpponent, setWaitingForOpponent] = React.useState(false);
+
+  const [localStream, setLocalStream] = React.useState();
+  const [remoteStream, setRemoteStream] = React.useState();
+
+
+  // const [localStream, setLocalStream] = React.useState();
+  // const [remoteStream, setRemoteStream] = React.useState();
 
   function on_delay() {
     setInCall(false);
@@ -165,6 +175,8 @@ export default function PoliticalRouletteApp() {
       on_delay,
       on_call_start,
       null,
+      setLocalStream,
+      setRemoteStream,
     );
   };
 
@@ -205,14 +217,11 @@ export default function PoliticalRouletteApp() {
 
       {localStream && <Text style={{fontSize: 24}}>LOCALSTREAM TEST</Text>}
 
-      {remoteStream && (
-        <View style={styles.rtcview}>
-          <Text style={{fontSize: 24}}>REMOTESTREAM TEST</Text>
-        </View>
-      )}
-
-
-
+      {/*{remoteStream && (*/}
+      {/*  <View style={styles.rtcview}>*/}
+      {/*    <Text style={{fontSize: 24}}>REMOTESTREAM TEST</Text>*/}
+      {/*  </View>*/}
+      {/*)}*/}
       {remoteStream && (
         <View style={styles.rtcview}>
           {<RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
@@ -238,10 +247,12 @@ const styles = StyleSheet.create({
     height: '40%',
     width: '80%',
     backgroundColor: 'black',
+    flex: 1,
   },
   rtc: {
     width: '80%',
-    height: '100%',
+    height: '50%',
+    flex: 1,
   },
   toggleButtons: {
     width: '100%',
