@@ -20,7 +20,7 @@ import {log_error} from './client_util';
 var uuid = require('react-native-uuid');
 
 // const host = __DEV__ ? 'ws://127.0.0.1:5000' : 'SOME_ENV_HOST';
-const host = __DEV__ ? 'ws://192.168.0.5:5000' : 'SOME_ENV_HOST';
+const host = __DEV__ ? 'ws://192.168.1.237:5000' : 'SOME_ENV_HOST';
 
 let connection = null;
 let clientID = null;
