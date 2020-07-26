@@ -40,31 +40,3 @@ export class PartySelection extends Component {
   }
 }
 
-export class Header extends Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'powderblue',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text style={{fontSize: 24}}>Welcome to Political Roulette</Text>
-      </View>
-    );
-  }
-}
-
-export class WaitingForOpponentScreen extends Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <Text style={{fontSize: 24}}>Finding partner, please wait...</Text>
-      </View>
-    );
-  }
-}

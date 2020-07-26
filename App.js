@@ -11,10 +11,12 @@ import {SafeAreaView, Text, View} from 'react-native';
 
 import {RTCView} from 'react-native-webrtc';
 import {connect, myParty, myPeerConnection} from './connection';
-import {Header, PartySelection, WaitingForOpponentScreen} from './components';
+import {PartySelection} from './components';
 import {styles} from './styles';
 import {Provider} from 'react-redux';
 import configureStore from './store';
+import {WaitingForOpponentScreen} from './components/waiting_for_opponent_screen';
+import {Header} from './components/header';
 
 
 const initialState = {}
