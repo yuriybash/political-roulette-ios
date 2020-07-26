@@ -13,7 +13,12 @@ import {RTCView} from 'react-native-webrtc';
 import {connect, myParty, myPeerConnection} from './connection';
 import {Header, PartySelection, WaitingForOpponentScreen} from './components';
 import {styles} from './styles';
+import {Provider} from 'react-redux';
+import configureStore from './store';
 
+
+const initialState = {}
+const store = configureStore(initialState)
 
 export default function PoliticalRouletteApp() {
   const [
@@ -40,8 +45,8 @@ export default function PoliticalRouletteApp() {
   }
 
   function setRemoteStreamAndlog(remoteStream) {
-    console.log("setting remote stream for party " + myParty)
-    setRemoteStream(remoteStream)
+    console.log('setting remote stream for party ' + myParty);
+    setRemoteStream(remoteStream);
   }
 
   const initializeCall = party => {
@@ -66,38 +71,39 @@ export default function PoliticalRouletteApp() {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      {waitingForPartySelection && <Header />}
-      {waitingForPartySelection && (
-        <PartySelection
-          party="conservative"
-          opposite_party="liberal"
-          onPress={setConservative}
-        />
-      )}
-      {waitingForPartySelection && (
-        <PartySelection
-          party="liberal"
-          opposite_party="conservative"
-          onPress={setLiberal}
-        />
-      )}
-      {waitingForOpponent && <WaitingForOpponentScreen />}
+    <Provider store={store}>
+      <SafeAreaView style={{flex: 1}}>
+        {waitingForPartySelection && <Header />}
+        {waitingForPartySelection && (
+          <PartySelection
+            party="conservative"
+            opposite_party="liberal"
+            onPress={setConservative}
+          />
+        )}
+        {waitingForPartySelection && (
+          <PartySelection
+            party="liberal"
+            opposite_party="conservative"
+            onPress={setLiberal}
+          />
+        )}
+        {waitingForOpponent && <WaitingForOpponentScreen />}
 
-      {localStream && (
-        <View style={styles.rtcview}>
-          {<RTCView style={styles.rtc} streamURL={localStream.toURL()} />}
-        </View>
-      )}
+        {localStream && (
+          <View style={styles.rtcview}>
+            {<RTCView style={styles.rtc} streamURL={localStream.toURL()} />}
+          </View>
+        )}
 
-      {localStream && <Text style={{fontSize: 24}}>LOCALSTREAM TEST</Text>}
+        {localStream && <Text style={{fontSize: 24}}>LOCALSTREAM TEST</Text>}
 
-      {remoteStream && (
-        <View style={styles.rtcview}>
-          {<RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
-        </View>
-      )}
-    </SafeAreaView>
+        {remoteStream && (
+          <View style={styles.rtcview}>
+            {<RTCView style={styles.rtc} streamURL={remoteStream.toURL()} />}
+          </View>
+        )}
+      </SafeAreaView>
+    </Provider>
   );
 }
-
