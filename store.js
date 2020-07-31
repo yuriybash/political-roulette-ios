@@ -7,7 +7,9 @@ import rootReducer from './reducers';
 
 export default function configureStore(preloadedState) {
   // const middlewares = [thunk];
+  console.log("L10")
   const middlewares = [];
+  console.log("L12")
 
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(immutableStateInvariant);
@@ -15,8 +17,13 @@ export default function configureStore(preloadedState) {
 
   const middlewareEnhancer = applyMiddleware(...middlewares);
 
+
   const enhancers = [middlewareEnhancer];
   const composedEnhancer = compose(...enhancers);
+
+  console.log("preloaded state: ")
+  console.log(preloadedState)
+
 
   const store = createStore(rootReducer, preloadedState);
 

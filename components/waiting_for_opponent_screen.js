@@ -1,8 +1,23 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
+import {connect} from 'react-redux';
 
-export class WaitingForOpponentScreen extends Component {
+function mapStateToProps(state) {
+  return state.visible_state;
+}
+
+export class WaitingForOpponentScreenComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const visible = this.props.waiting_for_opponent;
+
+    if (visible !== true) {
+      return null;
+    }
+
     return (
       <View
         style={{
@@ -13,3 +28,8 @@ export class WaitingForOpponentScreen extends Component {
     );
   }
 }
+
+export const WaitingForOpponentScreen = connect(
+  mapStateToProps,
+  // mapDispatchToProps,
+)(WaitingForOpponentScreenComponent);

@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
+import {connect} from 'react-redux';
+
+// const mapStateToProps = state => ({...state.visible_state});
+//
+// const mapDispatchToProps = dispatch => ({});
 
 export class Header extends Component {
   render() {
@@ -16,3 +21,8 @@ export class Header extends Component {
     );
   }
 }
+//
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(Header);
