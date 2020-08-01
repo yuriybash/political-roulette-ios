@@ -1,8 +1,9 @@
-import {SafeAreaView, Text, TouchableHighlight, View} from 'react-native';
+import {View} from 'react-native';
 import React, {Component} from 'react';
 import {Header} from './header';
 import {PartySelection} from './party_selection';
 import {connect} from 'react-redux';
+import {CONSERVATIVE, LIBERAL} from '../constants/consts';
 
 const mapStateToProps = state => ({...state.visible_state});
 
@@ -26,13 +27,11 @@ class HomepageComponent extends Component {
     return (
       <View style={{flex: 1}}>
         <Header />
-        <PartySelection party="conservative" opposite_party="liberal" />
-        <PartySelection party="liberal" opposite_party="conservative" />
+        <PartySelection party={CONSERVATIVE} opposite_party={LIBERAL} />
+        <PartySelection party={LIBERAL} opposite_party={CONSERVATIVE} />
       </View>
     );
   }
 }
 
-export const HomePage = connect(
-  mapStateToProps,
-)(HomepageComponent);
+export const HomePage = connect(mapStateToProps)(HomepageComponent);

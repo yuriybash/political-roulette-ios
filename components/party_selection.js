@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, TouchableHighlight, View} from 'react-native';
 import {connect} from 'react-redux';
 import {INITIAL_CONNECT_ATTEMPT} from '../constants/actionTypes';
+import {CONSERVATIVE} from '../constants/consts';
 
 function mapStateToProps(state) {
   return state.visible_state;
@@ -43,7 +44,7 @@ class PartySelectionComponent extends Component {
             style={{
               alignItems: 'center',
               backgroundColor:
-                this.props.party === 'conservative' ? 'red' : 'blue',
+                this.props.party === CONSERVATIVE ? 'red' : 'blue',
               justifyContent: 'center',
               height: 400,
             }}>

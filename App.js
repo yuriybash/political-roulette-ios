@@ -9,15 +9,12 @@
 import React from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 
-import {RTCView} from 'react-native-webrtc';
 import {connect, myParty, myPeerConnection} from './connection';
-import {styles} from './styles';
 import {Provider} from 'react-redux';
 import configureStore from './store';
 import {WaitingForOpponentScreen} from './components/waiting_for_opponent_screen';
-import {Header} from './components/header';
-import {PartySelection} from './components/party_selection';
 import {HomePage} from './components/homepage';
+import {CONSERVATIVE, LIBERAL} from './constants/consts';
 
 const initialState = {
   visible_state: {
@@ -74,13 +71,13 @@ export default function PoliticalRouletteApp() {
   };
 
   const setLiberal = () => {
-    setParty('liberal');
-    initializeCall('liberal');
+    setParty(LIBERAL);
+    initializeCall(LIBERAL);
   };
 
   const setConservative = () => {
-    setParty('conservative');
-    initializeCall('conservative');
+    setParty(CONSERVATIVE);
+    initializeCall(CONSERVATIVE);
   };
 
   return (
