@@ -1,12 +1,7 @@
-// const express = require('express');
-// const sslRedirect = require('heroku-ssl-redirect');
-// const path = require('path');
-// const http = require('http');
-// const WebSocketServer = require('websocket').server;
+
 import _ from 'lodash';
 import {
   RTCPeerConnection,
-  RTCView,
   mediaDevices,
   RTCSessionDescription,
   RTCIceCandidate,
@@ -19,7 +14,6 @@ import {log_error} from './client_util';
 
 var uuid = require('react-native-uuid');
 
-// const host = __DEV__ ? 'ws://127.0.0.1:5000' : 'SOME_ENV_HOST';
 const host = __DEV__ ? 'ws://192.168.1.237:5000' : 'SOME_ENV_HOST';
 
 let connection = null;
@@ -115,7 +109,12 @@ export async function connect(
           startLocalStream(localStreamSetter)
             .then(newStream => {
               createPeerConnection(on_call_end, remoteStreamSetter);
-              console.log("in party " + myParty + " , just set local stream, looks like: " + JSON.stringify(newStream))
+              console.log(
+                'in party ' +
+                  myParty +
+                  ' , just set local stream, looks like: ' +
+                  JSON.stringify(newStream),
+              );
               myPeerConnection.addStream(newStream);
             })
             .then(() => {
@@ -263,10 +262,6 @@ function handleVideoOfferMsg(
   local_stream_setter,
   remote_stream_setter,
 ) {
-
-
-
-
   console.log('on ' + myParty + ' side ' + 'in handleVideoOfferMsg');
 
   let newLocalStream = null;
@@ -279,7 +274,7 @@ function handleVideoOfferMsg(
     .then(newStream => {
       createPeerConnection(on_call_end, remote_stream_setter);
       console.log('on ' + myParty + ' side ' + 'L276');
-      myPeerConnection.addStream(newStream)
+      myPeerConnection.addStream(newStream);
 
       myPeerConnection.setRemoteDescription(new RTCSessionDescription(msg.sdp));
       console.log('on ' + myParty + ' side ' + ' L279');
@@ -381,7 +376,13 @@ function handleICEConnectionStateChangeEvent(event, on_call_end) {
 }
 
 function handleAddStreamEvent(event, remote_stream_setter) {
-  console.log('on ' + myParty + ' side ' + 'in handleAddStreamEvent, stream looks like: ' + JSON.stringify(event.stream));
+  console.log(
+    'on ' +
+      myParty +
+      ' side ' +
+      'in handleAddStreamEvent, stream looks like: ' +
+      JSON.stringify(event.stream),
+  );
   remote_stream_setter(event.stream);
   // myPeerConnection.addStream(event.stream)
 }
