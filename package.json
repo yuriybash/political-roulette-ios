@@ -18,7 +18,7 @@
     "path": "^0.12.7",
     "react": "16.9.0",
     "react-devtools": "^3.6.3",
-    "react-native": "0.61.5",
+    "react-native": "0.62.3",
     "react-native-uuid": "^1.4.9",
     "react-native-webrtc": "^1.75.3",
     "safe-buffer": "^5.2.0",
